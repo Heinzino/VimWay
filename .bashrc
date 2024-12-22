@@ -120,3 +120,7 @@ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 eval "$(oh-my-posh init bash --config ~/repo/VimWay/Terminal/gruvbox.omp.json)"
 alias cl='clear'
 
+# Bind Ctrl+F to execute the tmux-sessionizer command
+export PATH="$HOME/.local/bin:$PATH"
+bind '"\C-f":"tmux-sessionizer\n"'
+
