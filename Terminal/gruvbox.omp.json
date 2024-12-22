@@ -68,18 +68,6 @@
                     "type": "julia"
                   },
                 {
-                    "background": "#FFDE57",
-                    "foreground": "#111111",
-                    "powerline_symbol": "\ue0b0",
-                    "properties": {
-                        "display_mode": "files",
-                        "fetch_virtual_env": false
-                      },
-                    "style": "powerline",
-                    "template": " \ue235 {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }} ",
-                    "type": "python"
-                  },
-                {
                     "background": "#AE1401",
                     "foreground": "#ffffff",
                     "powerline_symbol": "\ue0b0",
