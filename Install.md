@@ -9,8 +9,8 @@
 ## Step 2: Add Homebrew to PATH
 Use the ending commands after running the first step. It should look something like:
 ```bash
- echo >> /home/heinzino/.bashrc
-    echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/heinzino/.bashrc
+ echo >> ~/.bashrc
+    echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.bashrc
     eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 ```
 
