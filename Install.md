@@ -77,3 +77,32 @@ It should start installing the package
 ```bash
 nvim
 ```
+
+# 4. Tmux Setup
+
+## Step 0: Installing Requirements
+```bash
+brew install fzf
+```
+
+## Step 1: Copying Configs
+```bash
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+cp .tmux.conf ~/
+cp tmux-sessionizer ~/.local/bin/
+chmod +x ~/.local/bin/tmux-sessionizer
+tmux source-file ~/.tmux.conf
+```
+## Step 2: Adjusting Configs
+
+Add these two lines to .bashrc
+```bash
+export PATH="$HOME/.local/bin:$PATH"
+bind '"\C-f":"tmux-sessionizer\n"'
+```
+
+Add 'hotkeys' to .tmux.conf for tmux sessionizer
+```bash
+bind-key -r C run-shell "~/.local/bin/tmux-sessionizer ~/repo/CP"
+bind-key -r B run-shell "~/.local/bin/tmux-sessionizer ~/repo/Helios-B3-Board"
+```
