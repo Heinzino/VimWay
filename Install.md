@@ -44,7 +44,36 @@ alias cl='clear'
 Restart the terminal or `source ~/.bashrc` to see the changes.
 
 
+# 3. Nvim Setup
 
+## Step 0 : Install Requirements
+```bash
+sudo apt update
+sudo apt install git make unzip gcc nodejs npm
+brew install ripgrep
+```
 
+## Step 1: More Requirements
+```bash
+sudo apt install pipx
+pipx ensurepath
+pipx install pyright
+```
 
+On powershell. You can install scoop the windows packager manager [here](https://scoop.sh/)
+```
+scoop install win32yank
+```
 
+## Step 2: Move the Nvim config file
+
+```bash
+mkdir ~/.config
+cp ./nvim ~/.config
+```
+
+## Step 3: Run Nvim
+It should start installing the package
+```bash
+nvim
+```
