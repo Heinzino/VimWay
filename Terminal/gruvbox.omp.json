@@ -46,6 +46,17 @@
                     "type": "git"
                   },
                 {
+                    "background": "#00FF00",
+                    "foreground": "#000000",
+                    "powerline_symbol": "\ue0b0",
+                    "properties": {
+                        "fetch_virtual_env": true
+                    },
+                    "style": "powerline",
+                    "template": " \uf0d0 venv",
+                    "type": "python"
+                },
+                {
                     "background": "#8ED1F7",
                     "foreground": "#111111",
                     "powerline_symbol": "\ue0b0",
