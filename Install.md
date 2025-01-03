@@ -17,7 +17,7 @@ Use the ending commands after running the first step. It should look something l
 ## Step 3: Install Software 
 
 ```bash
-brew install oh-my-posh tmux nvim
+brew install oh-my-posh tmux nvim lazygit
 ```
 
 # 2. Oh-my-posh Setup
@@ -69,7 +69,7 @@ scoop install win32yank
 
 ```bash
 mkdir ~/.config
-cp ./nvim ~/.config
+cp -r ./nvim ~/.config
 ```
 
 ## Step 3: Run Nvim
