@@ -125,7 +125,7 @@ vim.opt.scrolloff = 10
 --  NOTE: stty werase \^H to end of bashrc
 --  NOTE: Remap C-H from plugin nvim-cmp
 vim.api.nvim_set_keymap("i", "<C-H>", "<C-W>", { noremap = true, silent = true })
-vim.keymap.set("n", "<leader>nd", vim.cmd.Ex, { desc = "Open Nvim file explorer", silent = true })
+vim.keymap.set("n", "<leader>ff", vim.cmd.Ex, { desc = "Open Nvim file explorer", silent = true })
 
 -- NOTE: Netrw line numbers
 vim.opt.colorcolumn = nil
@@ -216,7 +216,7 @@ vim.keymap.set("n", "<leader>r", function()
 	vim.cmd('call VimuxRunCommand("' .. command .. '")')
 end, { silent = true, noremap = true })
 
-vim.keymap.set("n", "<C-n>", function()
+vim.keymap.set("n", "<leader>n", function()
 	-- Prompt for the new file name
 	local file_name = vim.fn.input("Enter new file name: ")
 
