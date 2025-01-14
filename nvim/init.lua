@@ -194,8 +194,6 @@ vim.keymap.set("n", "<leader>r", function()
 
 	local filetype = vim.bo.filetype
 	local filepath = vim.fn.expand("%:p") -- Full path to the current file
-	local dir = vim.fn.expand("%:p:h:h") -- Base directory (two levels up)
-	local classname = vim.fn.expand("%:t:r") -- Class name (file name without extension)
 	local command = ""
 
 	if filetype == "python" then
@@ -211,26 +209,9 @@ vim.keymap.set("n", "<leader>r", function()
 	elseif filetype == "lua" then
 		command = "lua " .. filepath
 	elseif filetype == "java" then
-		-- Check if the file is part of a package
-		local package_line = vim.fn.readfile(filepath)[1] -- Read the first line
-		local package = package_line:match("^%s*package%s+([%w%.]+)%s*;") -- Extract package name
-
-		if package then
-			-- If the file is part of a package, compile all .java files and run the class with its full name
-			command = "javac -d "
-				.. dir
-				.. " "
-				.. dir
-				.. "/**/*.java && java -cp "
-				.. dir
-				.. " "
-				.. package
-				.. "."
-				.. classname
-		else
-			-- If the file is not part of a package, compile and run only the current file
-			command = "javac " .. filepath .. " && java -cp " .. vim.fn.expand("%:p:h") .. " " .. classname
-		end
+		local classname = vim.fn.expand("%:t:r") -- Get the class name (file name without extension)
+		local dir = vim.fn.expand("%:p:h") -- Get the directory path of the file
+		command = "javac " .. filepath .. " && java -cp " .. dir .. " " .. classname
 	else
 		print("Unsupported filetype: " .. filetype)
 		return
