@@ -1,8 +1,8 @@
 --[[
 --
 
-TODO: formatting , maybe a linter -> dense-analysis/ale
-TODO: Unit test with vim-test extension -> vim-test/vim-test
+TODO: formatting , maybe a linter
+TODO: Unit test with vim-test extension
 TODO: Debugger? Prolly not
 
 What is Kickstart?
@@ -43,6 +43,11 @@ Kickstart Guide:
     for when you are first encountering a few different constructs in your Neovim config.
 
 If you experience any errors while trying to install kickstart, run `:checkhealth` for more info.
+
+I hope you enjoy your Neovim journey,
+- TJ
+
+P.S. You can delete this when you're done too. It's your config now! :)
 --]]
 
 -- Set <space> as the leader key
@@ -91,8 +96,6 @@ vim.opt.smartcase = true
 -- Keep signcolumn on by default
 vim.opt.signcolumn = "yes"
 
-vim.opt.spell = true
-vim.opt.spelllang = "en_us"
 -- Decrease update time
 vim.opt.updatetime = 250
 
@@ -125,7 +128,7 @@ vim.opt.scrolloff = 10
 --  NOTE: stty werase \^H to end of bashrc
 --  NOTE: Remap C-H from plugin nvim-cmp
 vim.api.nvim_set_keymap("i", "<C-H>", "<C-W>", { noremap = true, silent = true })
-vim.keymap.set("n", "<leader>ff", vim.cmd.Ex, { desc = "Open Nvim file explorer", silent = true })
+vim.keymap.set("n", "<leader>nd", vim.cmd.Ex, { desc = "Open Nvim file explorer", silent = true })
 
 -- NOTE: Netrw line numbers
 vim.opt.colorcolumn = nil
@@ -134,7 +137,7 @@ vim.cmd([[let g:netrw_bufsettings = 'noma nomod nu nobl nowrap ro']])
 vim.api.nvim_create_autocmd("VimEnter", {
 	pattern = "*",
 	callback = function()
-		if #vim.fn.argv() == 0 then
+		if #vim.argv() == 0 then
 			vim.cmd("Explore")
 		end
 	end,
@@ -190,12 +193,8 @@ vim.keymap.set("n", "<leader>t", function()
 end, { silent = true, noremap = true })
 
 vim.keymap.set("n", "<leader>r", function()
-	vim.cmd("write") -- Save the file before running it
-
 	local filetype = vim.bo.filetype
-	local filepath = vim.fn.expand("%:p") -- Full path to the current file
-	local dir = vim.fn.expand("%:p:h:h") -- Base directory (two levels up)
-	local classname = vim.fn.expand("%:t:r") -- Class name (file name without extension)
+	local filepath = vim.fn.expand("%:p")
 	local command = ""
 
 	if filetype == "python" then
@@ -210,27 +209,6 @@ vim.keymap.set("n", "<leader>r", function()
 		command = "bash " .. filepath
 	elseif filetype == "lua" then
 		command = "lua " .. filepath
-	elseif filetype == "java" then
-		-- Check if the file is part of a package
-		local package_line = vim.fn.readfile(filepath)[1] -- Read the first line
-		local package = package_line:match("^%s*package%s+([%w%.]+)%s*;") -- Extract package name
-
-		if package then
-			-- If the file is part of a package, compile all .java files and run the class with its full name
-			command = "javac -d "
-				.. dir
-				.. " "
-				.. dir
-				.. "/**/*.java && java -cp "
-				.. dir
-				.. " "
-				.. package
-				.. "."
-				.. classname
-		else
-			-- If the file is not part of a package, compile and run only the current file
-			command = "javac " .. filepath .. " && java -cp " .. vim.fn.expand("%:p:h") .. " " .. classname
-		end
 	else
 		print("Unsupported filetype: " .. filetype)
 		return
@@ -238,20 +216,6 @@ vim.keymap.set("n", "<leader>r", function()
 
 	vim.cmd('call VimuxRunCommand("' .. command .. '")')
 end, { silent = true, noremap = true })
-
-vim.keymap.set("n", "<leader>n", function()
-	-- Prompt for the new file name
-	local file_name = vim.fn.input("Enter new file name: ")
-
-	-- If no name is entered, abort
-	if file_name == "" then
-		print("No file name provided.")
-		return
-	end
-
-	-- Create the new file and switch to it
-	vim.cmd("e " .. file_name)
-end, { noremap = true, silent = true })
 
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
@@ -973,7 +937,6 @@ require("lazy").setup({
 				"diff",
 				"html",
 				"lua",
-				"java",
 				"luadoc",
 				"markdown",
 				"markdown_inline",
@@ -1113,6 +1076,7 @@ require("lazy").setup({
 		-- If you are using a Nerd Font: set icons to an empty table which will use the
 		-- default lazy.nvim defined Nerd Font icons, otherwise define a unicode icons table
 		icons = vim.g.have_nerd_font and {} or {
+			cmd = "⌘",
 			config = "🛠",
 			event = "📅",
 			ft = "📂",
