@@ -57,7 +57,7 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;36m\]\w\[\033[00m\]\$ '
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
@@ -120,7 +120,56 @@ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 eval "$(oh-my-posh init bash --config ~/repo/VimWay/Terminal/gruvbox.omp.json)"
 alias cl='clear'
 
-# Bind Ctrl+F to execute the tmux-sessionizer command
+
+# Created by `pipx` on 2025-01-03 22:11:45
+export PATH="$PATH:/home/heinzino/.local/bin"
 export PATH="$HOME/.local/bin:$PATH"
 bind '"\C-f":"tmux-sessionizer\n"'
+
+dn() {
+    # Define the downloads directory
+    downloads_dir="/mnt/c/Users/heinz/Downloads"
+    
+    # Check if the downloads directory exists
+    if [ ! -d "$downloads_dir" ]; then
+        echo "Directory $downloads_dir does not exist."
+        return 1
+    fi
+    
+    # Find the most recent file in the downloads directory
+    recent_file=$(ls -t "$downloads_dir" 2>/dev/null | head -n 1)
+    
+    if [ -z "$recent_file" ]; then
+        echo "No files found in $downloads_dir."
+        return 1
+    fi
+
+    # Move the file to the current directory
+    mv "$downloads_dir/$recent_file" .
+    
+    if [ $? -ne 0 ]; then
+        echo "Failed to move $recent_file."
+        return 1
+    fi
+
+    echo "Moved $recent_file to $(pwd)"
+    
+    # Check if the file is a .zip
+    if [[ "$recent_file" == *.zip ]]; then
+        echo "Unzipping $recent_file..."
+        unzip "$recent_file" -d .
+        
+        if [ $? -eq 0 ]; then
+            echo "Successfully unzipped $recent_file."
+            rm "$recent_file"
+            echo "Removed the original zip file."
+        else
+            echo "Failed to unzip $recent_file."
+        fi
+    fi
+}
+
+export BROWSER="explorer.exe"
+alias chrome="explorer.exe"
+
 
