@@ -106,3 +106,10 @@ Add 'hotkeys' to .tmux.conf for tmux sessionizer
 bind-key -r C run-shell "~/.local/bin/tmux-sessionizer ~/repo/CP"
 bind-key -r B run-shell "~/.local/bin/tmux-sessionizer ~/repo/Helios-B3-Board"
 ```
+
+# 4. Java Setup
+```bash
+ cp runTest ~/.local/bin/
+ source ~/.bashrc
+ chmod +x ~/.local/bin/runTest
+```
