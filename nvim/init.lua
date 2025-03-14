@@ -189,7 +189,7 @@ vim.keymap.set("n", "<leader>t", function()
 	end
 end, { silent = true, noremap = true })
 
-vim.keymap.set("n", "<leader>r", function()
+vim.keymap.set("n", "<leader>rf", function()
 	vim.cmd("write") -- Save the file before running it
 
 	local filetype = vim.bo.filetype
@@ -217,6 +217,43 @@ vim.keymap.set("n", "<leader>r", function()
 		return
 	end
 
+	vim.cmd('call VimuxRunCommand("' .. command .. '")')
+end, { silent = true, noremap = true })
+
+vim.keymap.set("n", "<leader>rd", function()
+	-- Get the current file path and filename
+	local filepath = vim.fn.expand("%:p")
+	local filename = vim.fn.expand("%:t:r")
+
+	-- Move 3 levels up
+	local rootdir = vim.fn.fnamemodify(filepath, ":h:h:h:h")
+
+	-- Define classpath and package
+	local classpath = "/home/heinzino/JavaExtensions/postgresql-42.7.1.jar"
+	local package = "edu.ucalgary.oop"
+
+	-- Compile command
+	local compile_cmd = "cd " .. rootdir .. " && javac -cp " .. classpath .. " " .. filepath
+
+	-- Run command
+	local run_cmd = "cd " .. rootdir .. " && java -cp .:" .. classpath .. " " .. package .. "." .. filename
+
+	-- Execute command in Vimux
+	local command = compile_cmd .. " && " .. run_cmd
+	vim.cmd('call VimuxRunCommand("' .. command .. '")')
+end, { silent = true, noremap = true })
+
+vim.keymap.set("n", "<leader>rt", function()
+	-- Get the current file path and filename (without extension)
+	local filename = vim.fn.expand("%:t:r")
+
+	-- Move 4 levels up (to project root)
+	local rootdir = vim.fn.fnamemodify(vim.fn.expand("%:p"), ":h:h:h:h")
+
+	-- Command to execute runTest script with the test class name
+	local command = "cd " .. rootdir .. " && ~/.local/bin/runTest " .. filename
+
+	-- Execute in Vimux
 	vim.cmd('call VimuxRunCommand("' .. command .. '")')
 end, { silent = true, noremap = true })
 
