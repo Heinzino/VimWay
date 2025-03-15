@@ -3,20 +3,26 @@
 # Check if at least one test class name was provided
 if [ $# -eq 0 ]; then
     echo "Usage: $0 <TestClassName1> [TestClassName2] ..."
-        exit 1
-	fi
+    exit 1
+fi
 
-	# Define classpath (JavaExtensions and current directory)
-	CLASSPATH="$HOME/JavaExtensions/*:."
+# Move to the project root directory (4 levels up from any test file)
+SCRIPT_DIR=$(dirname "$(realpath "$0")")
+PROJECT_ROOT=$(realpath "$SCRIPT_DIR/../../../../")
 
-	# Compile all Java files
-	echo "Compiling Java files..."
-	javac -cp "$CLASSPATH" edu/ucalgary/oop/*.java
+# Define classpath (Find all JARs in ~/JavaExtensions)
+CLASSPATH=$(find "$HOME/JavaExtensions" -name "*.jar" | tr '\n' ':'):.
 
-	# Run each test class provided as an argument
-	for testClass in "$@"; do
-	    echo "Running JUnit test for $testClass..."
-	        java -cp "$CLASSPATH" org.junit.runner.JUnitCore edu.ucalgary.oop.$testClass
-		    echo "--------------------------------------"
-		    done
+# Navigate to the project root
+cd "$PROJECT_ROOT" || exit
 
+# Compile all Java files in the package
+echo "Compiling Java files..."
+javac -cp "$CLASSPATH" edu/ucalgary/oop/*.java
+
+# Run each test class provided as an argument
+for testClass in "$@"; do
+    echo "Running JUnit test for $testClass..."
+    java -cp "$CLASSPATH" org.junit.runner.JUnitCore edu.ucalgary.oop.$testClass
+    echo "--------------------------------------"
+done
